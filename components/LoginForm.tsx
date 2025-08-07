@@ -5,12 +5,13 @@ import { useForm } from 'react-hook-form'
 import { LogIn, User, Mail } from 'lucide-react'
 
 interface LoginFormData {
-  name: string
+  username: string
   email: string
 }
 
 export default function LoginForm() {
   const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState('')
   
   const {
     register,
@@ -20,16 +21,29 @@ export default function LoginForm() {
 
   const onSubmit = async (data: LoginFormData) => {
     setIsLoading(true)
+    setError('')
+    
+    // Get stored users
+    const users = JSON.parse(localStorage.getItem('users') || '[]')
+    const user = users.find((u: any) => u.username === data.username && u.email === data.email)
+    
+    if (!user) {
+      setError('Invalid username or email')
+      setIsLoading(false)
+      return
+    }
+    
     // Simulate API call
     await new Promise(resolve => setTimeout(resolve, 1000))
     console.log('Login data:', data)
     
-    // Store user data in localStorage
-    localStorage.setItem('user', JSON.stringify({
-      name: data.name,
-      email: data.email,
-      agentId: `AG${Math.random().toString(36).substr(2, 6).toUpperCase()}`,
-      loginTime: new Date().toISOString()
+    // Store current user session
+    localStorage.setItem('currentUser', JSON.stringify({
+      id: user.id,
+      name: user.name,
+      username: user.username,
+      email: user.email,
+      agentId: user.agentId
     }))
     
     setIsLoading(false)
@@ -41,32 +55,34 @@ export default function LoginForm() {
     <div className="w-full">
       <div className="text-center mb-8">
         <h2 className="text-2xl font-bold text-gray-900 mb-2">Welcome Back</h2>
-        <p className="text-gray-600">Sign in to your ProSeller account</p>
+        <p className="text-gray-600">Sign in to your City Weavers account</p>
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+        {error && (
+          <div className="p-3 bg-danger-50 border border-danger-200 rounded-lg">
+            <p className="text-sm text-danger-600">{error}</p>
+          </div>
+        )}
+
         <div>
-          <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
-            Full Name
+          <label htmlFor="username" className="block text-sm font-medium text-gray-700 mb-2">
+            Username
           </label>
           <div className="relative">
             <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
             <input
-              {...register('name', {
-                required: 'Name is required',
-                minLength: {
-                  value: 2,
-                  message: 'Name must be at least 2 characters',
-                },
+              {...register('username', {
+                required: 'Username is required',
               })}
               type="text"
-              id="name"
+              id="username"
               className="input-field pl-10"
-              placeholder="Enter your full name"
+              placeholder="Enter your username"
             />
           </div>
-          {errors.name && (
-            <p className="mt-1 text-sm text-danger-600">{errors.name.message}</p>
+          {errors.username && (
+            <p className="mt-1 text-sm text-danger-600">{errors.username.message}</p>
           )}
         </div>
 

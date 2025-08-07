@@ -6,7 +6,7 @@ import './globals.css'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'ProSeller - Professional CBT Platform',
+  title: 'City Weavers - Professional CBT Platform',
   description: 'Computer-Based Test platform for agents to get certified',
 }
 
@@ -17,10 +17,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
-          {children}
-        </div>
+      <body className="min-h-screen bg-gradient-to-br from-green-50 to-green-100">
+        {children}
       </body>
     </html>
   )

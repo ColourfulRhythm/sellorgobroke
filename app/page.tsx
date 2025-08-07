@@ -1,13 +1,19 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { BookOpen, Award, Clock, Users, ArrowRight, CheckCircle } from 'lucide-react'
 import LoginForm from '@/components/LoginForm'
 import RegisterForm from '@/components/RegisterForm'
+import { initializeDemoUsers } from '@/lib/demo-users'
 
 export default function HomePage() {
   const [showLogin, setShowLogin] = useState(true)
+
+  useEffect(() => {
+    // Initialize demo users on first load
+    initializeDemoUsers()
+  }, [])
 
   return (
     <div className="min-h-screen">
@@ -17,7 +23,7 @@ export default function HomePage() {
           <div className="flex justify-between items-center py-4">
             <div className="flex items-center space-x-2">
               <BookOpen className="h-8 w-8 text-primary-600" />
-              <h1 className="text-2xl font-bold text-gray-900">ProSeller</h1>
+              <h1 className="text-2xl font-bold text-gray-900">City Weavers</h1>
             </div>
             <div className="flex space-x-4">
               <button
@@ -107,64 +113,48 @@ export default function HomePage() {
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">
-              Why Choose ProSeller?
-            </h2>
-            <p className="text-xl text-gray-600">
-              Professional testing platform designed for modern agents
-            </p>
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">Why Choose City Weavers?</h2>
+            <p className="text-xl text-gray-600">Professional testing platform designed for modern agents</p>
           </div>
-
+          
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <motion.div
               initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
               className="text-center"
             >
               <div className="bg-primary-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                 <BookOpen className="h-8 w-8 text-primary-600" />
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                Comprehensive Tests
-              </h3>
-              <p className="text-gray-600">
-                Well-designed assessments covering all essential topics for agents
-              </p>
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">Comprehensive Tests</h3>
+              <p className="text-gray-600">Well-designed assessments covering all essential topics for agents</p>
             </motion.div>
-
+            
             <motion.div
               initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
               className="text-center"
             >
               <div className="bg-success-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Award className="h-8 w-8 text-success-600" />
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                Instant Certification
-              </h3>
-              <p className="text-gray-600">
-                Download your professional certificate immediately after passing
-              </p>
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">Instant Certification</h3>
+              <p className="text-gray-600">Download your professional certificate immediately after passing</p>
             </motion.div>
-
+            
             <motion.div
               initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
               className="text-center"
             >
               <div className="bg-orange-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Clock className="h-8 w-8 text-orange-600" />
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                Flexible Retakes
-              </h3>
-              <p className="text-gray-600">
-                Retake tests if needed with comprehensive feedback and guidance
-              </p>
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">Flexible Retakes</h3>
+              <p className="text-gray-600">Retake tests if needed with comprehensive feedback and guidance</p>
             </motion.div>
           </div>
         </div>
